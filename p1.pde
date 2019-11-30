@@ -23,12 +23,12 @@ void setup () {
     new Scene(
       new Title("HUMAN IMPLANT CHIPS", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
       new DragableImage(new PVector(200, 200), new PVector(50, 50), loadImage("chip.jpg")),
-      new DragableImageTrigger(new PVector(width/2, height/2), new PVector(50, 50))
+      new DragableImageTrigger(new PVector(width/2, height/2), new PVector(50, 50)),
+      1
     ),
     new Scene(
       new Title("Lorem ipsum dolor sit amet?", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
-      null,
-      null
+      2,2
     )
   };
   
@@ -69,8 +69,8 @@ public class Scene {
   PVector slideVelocity = new PVector(-25, 0);
   color backgroundColor;
   
-  int previousScene;
-  int nextScene;
+  int previousSceneIndex;
+  int nextSceneIndex;
   
   // A reference to a title object
   // This object is only required on scenes
@@ -84,11 +84,19 @@ public class Scene {
   // The scene class' constructor
   // Defines the needed parameters a scene object
   // when creating an instance
-  Scene (Title _title, color _backgroundColor, DragableImage image, DragableImageTrigger trigger) {
+  Scene (Title _title, color _backgroundColor, DragableImage image, DragableImageTrigger trigger, int _nextSceneIndex) {
     title = _title;
     backgroundColor = _backgroundColor;
     dragableImage = image;
     dragableImageTrigger = trigger;
+    nextSceneIndex = _nextSceneIndex;
+  }
+  
+  Scene (Title _title, color _backgroundColor, int _previousSceneIndex, int _nextSceneIndex) {
+    title = _title;
+    backgroundColor = _backgroundColor;
+    previousSceneIndex = _previousSceneIndex;
+    nextSceneIndex = _nextSceneIndex;
   }
   
   public boolean slideOut() {
@@ -126,7 +134,7 @@ public class Scene {
         if (dragableImageTrigger.collidesWith(dragableImage) && !dragableImageTrigger.didTrigger) {
            dragableImageTrigger.didTrigger = true;
            scenes[1].position = new PVector(width, 0);
-           nextScene = scenes[1];
+           nextScene = scenes[nextSceneIndex];
         }
       }
       
