@@ -42,13 +42,16 @@ public class Button {
   color textFillColor = color(255);
   String txt;
   
+  boolean saveClick;
+  
   int nextSceneIndex;
   
-  Button(PVector _position, PVector _size, String _text, int _nextSceneIndex) {
+  Button(PVector _position, PVector _size, String _text, int _nextSceneIndex, boolean _saveClick) {
     position = _position;
     size = _size;
     txt = _text;
     nextSceneIndex = _nextSceneIndex;
+    saveClick = _saveClick;
   }
   
   public void display(Scene scene) {
@@ -61,11 +64,15 @@ public class Button {
   
   public void onMousePressed() {
     if (mouseWithin()) {
-      ParticipantAnswer participantAnswer = new ParticipantAnswer();
-      participantAnswer.dateTime = data.dateTime();
-      participantAnswer.question = currentScene.title.txt;
-      participantAnswer.answer = txt;
-      participantDatum.answers.add(participantAnswer);
+      
+      if (saveClick) {
+        ParticipantAnswer participantAnswer = new ParticipantAnswer();
+        participantAnswer.dateTime = data.dateTime();
+        participantAnswer.question = currentScene.title.txt;
+        participantAnswer.answer = txt;
+        participantDatum.answers.add(participantAnswer);
+      }
+      
       navigate(scenes[nextSceneIndex]);
     }
   }

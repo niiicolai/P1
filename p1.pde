@@ -24,7 +24,7 @@ void setup () {
   data.load();
   println(data.participantdata.size());
   
-  font = createFont(fontName, 25);
+  font = createFont(fontName, 15);
   
   // Create an instance of an array
   scenes = new Scene[] {
@@ -40,22 +40,36 @@ void setup () {
     new Scene(
       new Title("Lorem ipsum dolor sit amet?", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
       new Button[]{
-        new Button(new PVector (0, 0), new PVector (200, height), "NO", 2),
-        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 3)
+        new Button(new PVector (0, 0), new PVector (200, height), "NO", 2, true),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 3, true)
       }, false
     ),
     new Scene(
       new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS NO", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
       new Button[]{
-        new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
-        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
-      }, true
+        //new Button(new PVector (0, 0), new PVector (200, height), "PREVIOUS", 0, false),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "NEXT", 3, false)
+      }, false
     ),
     new Scene(
-      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS YES", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS YES 1", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
       new Button[]{
-        new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
-        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
+        //new Button(new PVector (0, 0), new PVector (200, height), "PREVIOUS", 0, false),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "NEXT", 4, false)
+      }, false
+    ),
+    new Scene(
+      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS YES 2", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new Button[]{
+        new Button(new PVector (0, 0), new PVector (200, height), "PREVIOUS", 3, false),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "NEXT", 5, false)
+      }, false
+    ),
+    new Scene(
+      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS YES 3", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new Button[]{
+        new Button(new PVector (0, 0), new PVector (200, height), "NO", 0, true),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0, true)
       }, true
     )
   };
