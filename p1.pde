@@ -133,7 +133,7 @@ public class Scene {
         dragableImageTrigger.display(this);
         if (dragableImageTrigger.collidesWith(dragableImage) && !dragableImageTrigger.didTrigger) {
            dragableImageTrigger.didTrigger = true;
-           scenes[1].position = new PVector(width, 0);
+           scenes[nextSceneIndex].position = new PVector(width, 0);
            nextScene = scenes[nextSceneIndex];
         }
       }
