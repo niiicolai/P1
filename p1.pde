@@ -28,7 +28,10 @@ void setup () {
     ),
     new Scene(
       new Title("Lorem ipsum dolor sit amet?", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
-      2,2
+      new Button[]{
+        new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
+      }
     )
   };
   
@@ -46,7 +49,8 @@ void draw() {
     boolean currentIsOut = currentScene.slideOut();
     boolean newIsIn = nextScene.slideIn();
     if (currentIsOut && newIsIn) {
-      currentScene = nextScene;
+      currentScene = nextScene;   
+      currentScene.beforeDisplay();
       nextScene = null;
     }
   }
@@ -58,6 +62,12 @@ void mousePressed() {
 
 void mouseReleased() {
   if (currentScene != null) currentScene.onMouseReleased();
+}
+
+void navigate(Scene scene) {
+  scene.beforeDisplay(); 
+  scene.position = new PVector(width, 0);
+  nextScene = scene;
 }
 
 // Defines a custom class we call 'Scene'
@@ -81,6 +91,8 @@ public class Scene {
   
   DragableImageTrigger dragableImageTrigger;
   
+  Button[] buttons;
+  
   // The scene class' constructor
   // Defines the needed parameters a scene object
   // when creating an instance
@@ -92,11 +104,10 @@ public class Scene {
     nextSceneIndex = _nextSceneIndex;
   }
   
-  Scene (Title _title, color _backgroundColor, int _previousSceneIndex, int _nextSceneIndex) {
+  Scene (Title _title, color _backgroundColor, Button[] _buttons) {
     title = _title;
     backgroundColor = _backgroundColor;
-    previousSceneIndex = _previousSceneIndex;
-    nextSceneIndex = _nextSceneIndex;
+    buttons = _buttons;
   }
   
   public boolean slideOut() {
@@ -117,6 +128,13 @@ public class Scene {
     }      
   }
   
+  // The scene's before display function
+  // will handle all resets needed before 'redisplaying' a scene
+  public void beforeDisplay() {
+    if (dragableImage != null) dragableImage.reset();
+    if (dragableImageTrigger != null) dragableImageTrigger.reset();
+  }
+  
   // The scene's display function
   // This will be called from draw
   public void display() {
@@ -133,18 +151,29 @@ public class Scene {
         dragableImageTrigger.display(this);
         if (dragableImageTrigger.collidesWith(dragableImage) && !dragableImageTrigger.didTrigger) {
            dragableImageTrigger.didTrigger = true;
-           scenes[nextSceneIndex].position = new PVector(width, 0);
-           nextScene = scenes[nextSceneIndex];
+           navigate(scenes[nextSceneIndex]);
         }
       }
       
       dragableImage.display(this);
       dragableImage.boundariesCheck(this);
     }
+    
+    if (buttons != null) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].display(this); 
+      }
+    }
   }
   
   public void onMousePressed() {
     if (dragableImage != null) dragableImage.onMousePressed();
+    
+    if (buttons != null) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].onMousePressed(); 
+      }
+    }
   }
   
   public void onMouseReleased() {
@@ -185,5 +214,42 @@ public class Title {
     textFont(font);
     textAlign(align);
     text(text, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+  }
+}
+
+public class Button {
+ 
+  PVector position;
+  PVector size;
+  color fillColor = color(0);
+  color textFillColor = color(255);
+  String txt;
+  
+  int nextSceneIndex;
+  
+  Button(PVector _position, PVector _size, String _text, int _nextSceneIndex) {
+    position = _position;
+    size = _size;
+    txt = _text;
+    nextSceneIndex = _nextSceneIndex;
+  }
+  
+  public void display(Scene scene) {
+    fill(fillColor);
+    rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    fill(textFillColor);
+    textAlign(CENTER);
+    text(txt, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+  }
+  
+  public void onMousePressed() {
+    if (mouseWithin()) {
+      navigate(scenes[nextSceneIndex]);
+    }
+  }
+  
+  boolean mouseWithin() {
+    return (mouseX >= position.x && mouseX <= position.x+size.x &&
+        mouseY >= position.y && mouseY <= position.y+size.y);
   }
 }

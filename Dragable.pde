@@ -8,39 +8,49 @@ public class DragableImageTrigger {
     size = _size;
   }
   
-  void display(Scene scene) {
+  public void reset() {
+     didTrigger = false;
+  }
+  
+  public void display(Scene scene) {
     fill(155);
     rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
   }
   
-  boolean collidesWith(DragableImage _img) {
+  public boolean collidesWith(DragableImage _img) {
     float dist = PVector.dist(position, _img.position);
     return (dist <= size.x || dist <= size.y);
   }
 }
 
 public class DragableImage {
- 
+  PVector startPosition;
   PVector position;
   PVector size;
-  PImage _image;
+  PImage img;
   boolean isDragging;
   
-  DragableImage(PVector _position, PVector _size, PImage __image) {
+  DragableImage(PVector _position, PVector _size, PImage _image) {
+    startPosition = new PVector(_position.x, _position.y);
     position = _position;
     size = _size;
-    _image = __image;
+    img = _image;
   }
   
-  void display(Scene scene) {
+  public void reset() {
+     position = new PVector(startPosition.x, startPosition.y);
+     isDragging = false;
+  }
+  
+  public void display(Scene scene) {
     if (isDragging) {
       position = new PVector(mouseX, mouseY); 
     }
     
-    image(_image, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    image(img, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
   }
   
-  boolean mouseWithin() {
+  public boolean mouseWithin() {
     return (mouseX >= position.x && mouseX <= position.x+size.x &&
         mouseY >= position.y && mouseY <= position.y+size.y);
   }
