@@ -1,0 +1,72 @@
+// Defines a custom class called 'Title'
+// In cases where a scene needs a title should an instance of this object
+// be passed to the scene constructor and a similar title will be drawed
+// on each page
+public class Title {
+  
+  // A refernce to a string object hold the title's text
+  private String text;
+  
+  // The position of the title
+  private PVector position;
+  
+  // The position of the title
+  private PVector size;
+  
+  // The color of the title's text
+  private color textColor = color(0);  
+  
+  private int align;
+  
+  // The title's constructor
+  Title(String _text, PVector _position, PVector _size, int _align) {
+    text = _text;
+    position = new PVector(_position.x, _position.y);
+    size = new PVector(_size.x, _size.y);
+    align = _align;
+  }
+  
+  public void display(Scene scene) {
+    fill(textColor);
+    textFont(font);
+    textAlign(align);
+    text(text, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+  }
+}
+
+public class Button {
+ 
+  PVector position;
+  PVector size;
+  color fillColor = color(0);
+  color textFillColor = color(255);
+  String txt;
+  
+  int nextSceneIndex;
+  
+  Button(PVector _position, PVector _size, String _text, int _nextSceneIndex) {
+    position = _position;
+    size = _size;
+    txt = _text;
+    nextSceneIndex = _nextSceneIndex;
+  }
+  
+  public void display(Scene scene) {
+    fill(fillColor);
+    rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    fill(textFillColor);
+    textAlign(CENTER);
+    text(txt, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+  }
+  
+  public void onMousePressed() {
+    if (mouseWithin()) {
+      navigate(scenes[nextSceneIndex]);
+    }
+  }
+  
+  boolean mouseWithin() {
+    return (mouseX >= position.x && mouseX <= position.x+size.x &&
+        mouseY >= position.y && mouseY <= position.y+size.y);
+  }
+}
