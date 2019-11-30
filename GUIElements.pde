@@ -5,7 +5,7 @@
 public class Title {
   
   // A refernce to a string object hold the title's text
-  private String text;
+  public String txt;
   
   // The position of the title
   private PVector position;
@@ -20,7 +20,7 @@ public class Title {
   
   // The title's constructor
   Title(String _text, PVector _position, PVector _size, int _align) {
-    text = _text;
+    txt = _text;
     position = new PVector(_position.x, _position.y);
     size = new PVector(_size.x, _size.y);
     align = _align;
@@ -30,7 +30,7 @@ public class Title {
     fill(textColor);
     textFont(font);
     textAlign(align);
-    text(text, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    text(txt, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
   }
 }
 
@@ -61,7 +61,11 @@ public class Button {
   
   public void onMousePressed() {
     if (mouseWithin()) {
-      participantDatum.answers.add(txt);
+      ParticipantAnswer participantAnswer = new ParticipantAnswer();
+      participantAnswer.dateTime = data.dateTime();
+      participantAnswer.question = currentScene.title.txt;
+      participantAnswer.answer = txt;
+      participantDatum.answers.add(participantAnswer);
       navigate(scenes[nextSceneIndex]);
     }
   }

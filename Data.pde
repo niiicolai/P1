@@ -3,24 +3,24 @@ class Data {
   public ArrayList<ParticipantDatum> participantdata = new ArrayList<ParticipantDatum>();
   
   public void load() {
-    File f = new File(dataPath);
-    if (!f.exists()) {
-      return;  
-    }
-    
     JSONArray _participantdata = loadJSONArray(dataPath); 
     
     for (int i = 0; i < _participantdata.size(); i++) {
       JSONObject participantJSONObj = _participantdata.getJSONObject(i); 
       ParticipantDatum _participantdatum = new ParticipantDatum();
-      _participantdatum.dateTime = participantJSONObj.getString("datetime");
+      _participantdatum.dateTime = participantJSONObj.getString("dateTime");
 
       JSONArray _participantAnswers = participantJSONObj.getJSONArray("answers");
       for (int x = 0; x < _participantAnswers.size(); x++) {
         JSONObject _participantAnswer = _participantAnswers.getJSONObject(x); 
-        String answer = _participantAnswer.getString("answer");
-        _participantdatum.answers.add(answer);
-      }      
+        ParticipantAnswer participantAnswer = new ParticipantAnswer();
+        participantAnswer.dateTime = _participantAnswer.getString("dateTime");
+        participantAnswer.question = _participantAnswer.getString("question");
+        participantAnswer.answer = _participantAnswer.getString("answer");
+        _participantdatum.answers.add(participantAnswer);
+      }     
+
+      participantdata.add(_participantdatum);
     }
   }
   
@@ -29,12 +29,14 @@ class Data {
     
     for (int i = 0; i < participantdata.size(); i++) {
       JSONObject participantJSONObj = new JSONObject();
-      participantJSONObj.setString("datetime", year()+"-"+month()+"-"+day()+" "+hour()+":"+minute()+":"+second());
+      participantJSONObj.setString("dateTime", dateTime());
       JSONArray participantJSONAnswers = new JSONArray();
       
       for (int x = 0; x < participantdata.get(i).answers.size(); x++) {
         JSONObject _answerJSONObj = new JSONObject();        
-        _answerJSONObj.setString("answer", participantdata.get(i).answers.get(x));
+        _answerJSONObj.setString("dateTime", participantdata.get(i).answers.get(x).dateTime);
+        _answerJSONObj.setString("question", participantdata.get(i).answers.get(x).question);
+        _answerJSONObj.setString("answer", participantdata.get(i).answers.get(x).answer);
         participantJSONAnswers.setJSONObject(x, _answerJSONObj);
       }
       
@@ -44,9 +46,19 @@ class Data {
     
     saveJSONArray(_participantdata, "data.json");
   }    
+  
+  public String dateTime() {
+    return year()+"-"+month()+"-"+day()+" "+hour()+":"+minute()+":"+second();
+  }
 }
 
 class ParticipantDatum {
   public String dateTime;
-  public ArrayList<String> answers = new ArrayList<String>();;
+  public ArrayList<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
+}
+
+class ParticipantAnswer {
+  public String dateTime;
+  public String question;
+  public String answer;
 }

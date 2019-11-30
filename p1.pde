@@ -22,6 +22,7 @@ void setup () {
   
   data = new Data();
   data.load();
+  println(data.participantdata.size());
   
   font = createFont(fontName, 25);
   
@@ -38,6 +39,20 @@ void setup () {
     ),
     new Scene(
       new Title("Lorem ipsum dolor sit amet?", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new Button[]{
+        new Button(new PVector (0, 0), new PVector (200, height), "NO", 2),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 3)
+      }, false
+    ),
+    new Scene(
+      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS NO", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new Button[]{
+        new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
+        new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
+      }, true
+    ),
+    new Scene(
+      new Title("Lorem ipsum dolor sit amet? LAST ANSWER WAS YES", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
       new Button[]{
         new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
         new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
