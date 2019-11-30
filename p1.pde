@@ -21,8 +21,14 @@ void setup () {
     // create a new instance of the frontpage object 
     // and add to the scene array
     new Scene(
-      new Title("HUMAN IMPLANT CHIPS", new PVector (50, 50)), color(255),
-      new DragableImage(new PVector(200, 200), new PVector(50, 50), loadImage("chip.jpg"))
+      new Title("HUMAN IMPLANT CHIPS", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      new DragableImage(new PVector(200, 200), new PVector(50, 50), loadImage("chip.jpg")),
+      new DragableImageTrigger(new PVector(width/2, height/2), new PVector(50, 50))
+    ),
+    new Scene(
+      new Title("Lorem ipsum dolor sit amet?", new PVector (0, 50), new PVector (width, 50), CENTER), color(255),
+      null,
+      null
     )
   };
   
@@ -30,15 +36,20 @@ void setup () {
   currentScene = scenes[0];
 }
 
-void navigate(Scene scene) {
-  
-  currentScene = scene;
-}
-
 void draw() {
   // if we the value of currentScene is NOT equal to 'null'
   // call the display function on the current scene object
   if (currentScene != null) currentScene.display();
+  
+  if (currentScene != null && nextScene != null) {
+    nextScene.display();
+    boolean currentIsOut = currentScene.slideOut();
+    boolean newIsIn = nextScene.slideIn();
+    if (currentIsOut && newIsIn) {
+      currentScene = nextScene;
+      nextScene = null;
+    }
+  }
 }
 
 void mousePressed() {
@@ -55,8 +66,11 @@ void mouseReleased() {
 public class Scene {
   
   PVector position = new PVector(0, 0);
-  
+  PVector slideVelocity = new PVector(-25, 0);
   color backgroundColor;
+  
+  int previousScene;
+  int nextScene;
   
   // A reference to a title object
   // This object is only required on scenes
@@ -65,13 +79,34 @@ public class Scene {
   
   DragableImage dragableImage;
   
+  DragableImageTrigger dragableImageTrigger;
+  
   // The scene class' constructor
   // Defines the needed parameters a scene object
   // when creating an instance
-  Scene (Title _title, color _backgroundColor, DragableImage image) {
+  Scene (Title _title, color _backgroundColor, DragableImage image, DragableImageTrigger trigger) {
     title = _title;
     backgroundColor = _backgroundColor;
     dragableImage = image;
+    dragableImageTrigger = trigger;
+  }
+  
+  public boolean slideOut() {
+    if (position.x+width > 0) {
+      position.add(slideVelocity);
+      return false;
+    } else {      
+      return true; 
+    }      
+  }
+  
+  public boolean slideIn() {
+    if (position.x > 0) {
+      position.add(slideVelocity);
+      return false;
+    } else {      
+      return true; 
+    }      
   }
   
   // The scene's display function
@@ -86,7 +121,16 @@ public class Scene {
     if (title != null) title.display(this);   
     
     if (dragableImage != null) {
-      dragableImage.display();
+      if (dragableImageTrigger != null) {
+        dragableImageTrigger.display(this);
+        if (dragableImageTrigger.collidesWith(dragableImage) && !dragableImageTrigger.didTrigger) {
+           dragableImageTrigger.didTrigger = true;
+           scenes[1].position = new PVector(width, 0);
+           nextScene = scenes[1];
+        }
+      }
+      
+      dragableImage.display(this);
       dragableImage.boundariesCheck(this);
     }
   }
@@ -112,65 +156,26 @@ public class Title {
   // The position of the title
   private PVector position;
   
+  // The position of the title
+  private PVector size;
+  
   // The color of the title's text
   private color textColor = color(0);  
   
+  private int align;
+  
   // The title's constructor
-  Title(String _text, PVector _position) {
+  Title(String _text, PVector _position, PVector _size, int _align) {
     text = _text;
     position = new PVector(_position.x, _position.y);
+    size = new PVector(_size.x, _size.y);
+    align = _align;
   }
   
   public void display(Scene scene) {
     fill(textColor);
     textFont(font);
-    text(text, scene.position.x+position.x, scene.position.y+position.y);
-  }
-}
-
-public class DragableImage {
- 
-  PVector position;
-  PVector size;
-  PImage _image;
-  boolean isDragging;
-  
-  DragableImage(PVector _position, PVector _size, PImage __image) {
-    position = _position;
-    size = _size;
-    _image = __image;
-  }
-  
-  void display() {
-    if (isDragging) {
-      position = new PVector(mouseX, mouseY); 
-    }
-    
-    image(_image, position.x, position.y, size.x, size.y);
-  }
-  
-  boolean mouseWithin() {
-    return (mouseX >= position.x && mouseX <= position.x+size.x &&
-        mouseY >= position.y && mouseY <= position.y+size.y);
-  }
-  
-  public void boundariesCheck(Scene scene) {
-    if (position.x < scene.position.x) position.x = scene.position.x;
-    else if (position.x+size.x > scene.position.x+width) position.x = scene.position.x+width-size.x;
-    
-    if (position.y < scene.position.y) position.y = scene.position.y;
-    else if (position.y+size.y > scene.position.y+height) position.y = scene.position.y+height-size.y;
-  }
-  
-  public void onMousePressed() {
-    if (mouseWithin()) {
-      isDragging = true;
-    }
-  }
-  
-  public void onMouseReleased() {
-    if (isDragging) {
-      isDragging = false; 
-    }
+    textAlign(align);
+    text(text, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
   }
 }
