@@ -1,9 +1,14 @@
+Data data;
+
+ParticipantDatum participantDatum;
+
 // An array with a reference to all scene objects
 Scene[] scenes;
 
 // A reference to the current scene
 Scene currentScene;
 
+// A reference to the next scene
 Scene nextScene;
 
 String fontName = "Arial";
@@ -12,6 +17,11 @@ PFont font;
 void setup () {
   // Set Processing display size
   size (1000, 700);
+  
+  participantDatum = new ParticipantDatum();
+  
+  data = new Data();
+  data.load();
   
   font = createFont(fontName, 25);
   
@@ -31,7 +41,7 @@ void setup () {
       new Button[]{
         new Button(new PVector (0, 0), new PVector (200, height), "NO", 0),
         new Button(new PVector (width-200, 0), new PVector (200, height), "YES", 0)
-      }
+      }, true
     )
   };
   
@@ -49,6 +59,7 @@ void draw() {
     boolean currentIsOut = currentScene.slideOut();
     boolean newIsIn = nextScene.slideIn();
     if (currentIsOut && newIsIn) {
+      if (currentScene.saveParticipantOnLeave) addParticipantDatum();
       currentScene = nextScene;   
       currentScene.beforeDisplay();
       nextScene = null;
@@ -68,4 +79,10 @@ void navigate(Scene scene) {
   scene.beforeDisplay(); 
   scene.position = new PVector(width, 0);
   nextScene = scene;
+}
+
+public void addParticipantDatum() {
+  data.participantdata.add(participantDatum);
+  data.save();
+  participantDatum = new ParticipantDatum();
 }

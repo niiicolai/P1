@@ -21,6 +21,8 @@ public class Scene {
   
   Button[] buttons;
   
+  boolean saveParticipantOnLeave;
+  
   // The scene class' constructor
   // Defines the needed parameters a scene object
   // when creating an instance
@@ -32,10 +34,11 @@ public class Scene {
     nextSceneIndex = _nextSceneIndex;
   }
   
-  Scene (Title _title, color _backgroundColor, Button[] _buttons) {
+  Scene (Title _title, color _backgroundColor, Button[] _buttons, boolean _saveParticipantOnLeave) {
     title = _title;
     backgroundColor = _backgroundColor;
     buttons = _buttons;
+    saveParticipantOnLeave = _saveParticipantOnLeave;
   }
   
   public boolean slideOut() {

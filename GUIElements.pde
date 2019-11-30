@@ -56,11 +56,12 @@ public class Button {
     rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
     fill(textFillColor);
     textAlign(CENTER);
-    text(txt, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    text(txt, scene.position.x+position.x, scene.position.y+position.y+(size.y/2), size.x, size.y);
   }
   
   public void onMousePressed() {
     if (mouseWithin()) {
+      participantDatum.answers.add(txt);
       navigate(scenes[nextSceneIndex]);
     }
   }
