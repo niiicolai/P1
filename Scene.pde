@@ -5,7 +5,8 @@ public class Scene {
   
   PVector position = new PVector(0, 0);
   
-  PVector slideVelocity = new PVector(25, 0);  
+  PVector slideVelocity = new PVector(40, 0);  
+  PVector slideVelocityDamper = new PVector(2, 0); 
   int slideOutDirection = LEFT;
   int slideInDirection = LEFT;
   
@@ -74,7 +75,10 @@ public class Scene {
   public boolean slideIn() {
     boolean outsideTheScreen = (slideInDirection == LEFT ? position.x > 0 : position.x < 0);
     if (outsideTheScreen) {
-      position.add(slideInDirection == LEFT ? new PVector(-slideVelocity.x, -slideVelocity.y) : slideVelocity);
+      PVector velocity = slideVelocity;
+      if (slideInDirection == LEFT && position.x < slideVelocity.x-5 ||
+          slideInDirection == RIGHT && position.x > slideVelocity.x-5) velocity = slideVelocityDamper;
+      position.add(slideInDirection == LEFT ? new PVector(-velocity.x, -velocity.y) : velocity);
       return false;
     } else {      
       return true; 
@@ -86,6 +90,11 @@ public class Scene {
   public void beforeDisplay() {
     if (dragableImage != null) dragableImage.reset();
     if (dragableImageTrigger != null) dragableImageTrigger.reset();
+    if (buttons != null) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].reset(); 
+      }
+    }
   }
   
   // The scene's display function
@@ -128,7 +137,7 @@ public class Scene {
         dragableImageTrigger.display(this);
         if (dragableImageTrigger.collidesWith(dragableImage) && !dragableImageTrigger.didTrigger) {
            dragableImageTrigger.didTrigger = true;
-           navigate(scenes[nextSceneIndex]);
+           navigate(scenes[nextSceneIndex], true);
         }
       }
       
@@ -149,5 +158,11 @@ public class Scene {
   
   public void onMouseReleased() {
     if (dragableImage != null) dragableImage.onMouseReleased();
+    
+    if (buttons != null) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].onMouseReleased(); 
+      }
+    }
   }
 }
