@@ -39,7 +39,7 @@ public class DragableImageTrigger {
   
   public boolean collidesWith(DragableImage _img) {
     float dist = PVector.dist(center(), _img.center());
-    return (dist <= (size.x/2) || dist <= (size.y/2));
+    return (dist <= (size.x/2)+(_img.size.x/2)/2 || dist <= (size.y/2)+(_img.size.y/2)/2);
   }
   
   PVector center() {

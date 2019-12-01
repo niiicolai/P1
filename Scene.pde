@@ -32,6 +32,8 @@ public class Scene {
   
   Arrow[] arrows;
   
+  SceneLoader sceneLoader;
+  
   boolean saveParticipantOnLeave;
   
   // The scene class' constructor
@@ -52,6 +54,13 @@ public class Scene {
     backgroundColor = _backgroundColor;
     buttons = _buttons;
     saveParticipantOnLeave = _saveParticipantOnLeave;
+  }
+  
+  Scene (Title _title, color _backgroundColor, SceneLoader _sceneLoader, int _nextSceneIndex) {
+    title = _title;
+    backgroundColor = _backgroundColor;
+    sceneLoader = _sceneLoader;
+    nextSceneIndex = _nextSceneIndex;
   }
   
   Scene (Title _title, color _backgroundColor, Button[] _buttons, TextBox[] _textBoxes, boolean _saveParticipantOnLeave) {
@@ -90,6 +99,7 @@ public class Scene {
   public void beforeDisplay() {
     if (dragableImage != null) dragableImage.reset();
     if (dragableImageTrigger != null) dragableImageTrigger.reset();
+    if (sceneLoader != null) sceneLoader.reset();
     if (buttons != null) {
       for (int i = 0; i < buttons.length; i++) {
         buttons[i].reset(); 
@@ -115,6 +125,8 @@ public class Scene {
         arrows[i].display(this); 
       }
     }
+    
+    if (sceneLoader != null) sceneLoader.display(this);
     
     // if this scene has a title
     // call the title object's display function

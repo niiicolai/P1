@@ -39,8 +39,6 @@ public class Title {
 }
 
 public class TextBox {
-  
-  public String titleTxt;
   public String txt;
   
   private PVector position;
@@ -56,8 +54,7 @@ public class TextBox {
   private float textPadding = 30;
   
   // The title's constructor
-  TextBox(String _titleTxt, String _text, PVector _position, PVector _size, int _align) {
-    titleTxt = _titleTxt;
+  TextBox(String _text, PVector _position, PVector _size, int _align) {
     txt = _text;
     position = new PVector(_position.x, _position.y);
     size = new PVector(_size.x, _size.y);
@@ -71,9 +68,8 @@ public class TextBox {
     fill(textColor);
     textSize(txtSize);
     textFont(font2);
-    textAlign(align);
-    text(titleTxt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2), size.x-textPadding, size.y-textPadding);      
-    text(txt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2)+(textPadding/1.2), size.x-textPadding, size.y);
+    textAlign(align);     
+    text(txt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2), size.x-textPadding, size.y);
   }
 }
 
@@ -91,6 +87,51 @@ public class Image {
   
   public void display(Scene scene) {
     image(img, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+  }
+}
+
+public class SceneLoader {
+  
+  private PVector position;
+  private PVector size;
+  
+  private float counter;
+  private float counterMax = 250;
+
+  private color pulseStrokeColor = color(0, 252, 166);
+  private float pulseStrokeWeight = 1.5;
+  private int numberOfPulse = 15; 
+  private float[] currentPulseRadius = new float[numberOfPulse];  
+  private float pulseRadiusSpeed = 1.5;
+  private float maxPulseRadius = 420;
+  private float pulseSpacing = 5;
+  
+  SceneLoader(PVector _position, PVector _size) {
+    position = new PVector(_position.x, _position.y);
+    size = new PVector(_size.x, _size.y);
+    reset();
+  }
+  
+  public void reset() {
+    for (int i = 0; i < numberOfPulse; i++) {
+      currentPulseRadius[i] = (i*pulseSpacing);
+    }
+  }
+  
+  public void display(Scene scene) {
+    if (counter < counterMax) counter++;
+    if (counter >= counterMax) {
+      counter = 0;
+      navigate(scenes[scene.nextSceneIndex], true); 
+    }
+    
+    fill(color(0,0,0,1));
+    stroke(pulseStrokeColor);
+    strokeWeight(pulseStrokeWeight);
+    for (int i = 0; i < numberOfPulse; i++) {
+      currentPulseRadius[i] = (currentPulseRadius[i]+pulseRadiusSpeed) % maxPulseRadius;
+      circle(scene.position.x+position.x+(size.x/2), scene.position.y+position.y+(size.y/2), currentPulseRadius[i]); 
+    }
   }
 }
 

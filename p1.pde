@@ -32,7 +32,6 @@ void setup () {
   data = new Data();
   data.load();
   println(data.participantdata.size());
-  String dummyTitle = "Lorem ipsum dolor";
   String dummyText = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.";
   
   // Create an instance of an array
@@ -72,9 +71,9 @@ void setup () {
         new Button(new PVector (width-150, 0), new PVector (150, height), 3, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyTitle, dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
       }, false
     ),
     new Scene(
@@ -84,9 +83,9 @@ void setup () {
         new Button(new PVector (width-150, 0), new PVector (150, height), 4, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyTitle, dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
+        new TextBox(dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
       }, false
     ),
     new Scene(
@@ -96,9 +95,9 @@ void setup () {
         new Button(new PVector (width-150, 0), new PVector (150, height), 5, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyTitle, dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
       }, false
     ),
     new Scene(
@@ -108,9 +107,9 @@ void setup () {
         new Button(new PVector (width-150, 0), new PVector (150, height), 6, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyTitle, dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
       }, false
     ),
     new Scene(
@@ -120,17 +119,21 @@ void setup () {
         new Button(new PVector (width-150, 0), new PVector (150, height), 7, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyTitle, dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyTitle, dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
+        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
       }, false
     ),
     new Scene(
       new Title("Sed do eiusmod tempor incididunt?", new PVector (200, height/2), new PVector (width-400, 50), CENTER, 30), color(255),
       new Button[]{
-        new Button(new PVector (0, 0), new PVector (150, height), "NO", 0, true, RIGHT),
-        new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 0, true, LEFT)
+        new Button(new PVector (0, 0), new PVector (150, height), "NO", 8, true, RIGHT),
+        new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 8, true, LEFT)
       }, true
+    ),
+    new Scene(
+      new Title("Thank you for your participation", new PVector (200, height/2), new PVector (width-400, 50), CENTER, 30), color(255),
+      new SceneLoader(new PVector (200, height/2), new PVector (width-400, 50)), 0
     )
   };
   
