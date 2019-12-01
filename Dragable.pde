@@ -3,9 +3,24 @@ public class DragableImageTrigger {
   PVector size;
   boolean didTrigger;
   
+  private color pulseStrokeColor = color(0, 252, 166);
+  private float pulseStrokeWeight = 1.5;
+  private int numberOfPulse = 5; 
+  private float[] currentPulseRadius = new float[numberOfPulse];  
+  private float pulseRadiusSpeed = .8;
+  private float maxPulseRadius = 120;
+  private float pulseSpacing = 25;
+  
   DragableImageTrigger(PVector _position, PVector _size) {
     position = _position;
     size = _size;
+    resetPulse();
+  }
+  
+  public void resetPulse() {
+    for (int i = 0; i < numberOfPulse; i++) {
+      currentPulseRadius[i] = (i*pulseSpacing);
+    }
   }
   
   public void reset() {
@@ -13,28 +28,53 @@ public class DragableImageTrigger {
   }
   
   public void display(Scene scene) {
-    fill(155);
-    rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    fill(color(0,0,0,1));
+    stroke(pulseStrokeColor);
+    strokeWeight(pulseStrokeWeight);
+    for (int i = 0; i < numberOfPulse; i++) {
+      currentPulseRadius[i] = (currentPulseRadius[i]+pulseRadiusSpeed) % maxPulseRadius;
+      circle(scene.position.x+position.x+(size.x/2), scene.position.y+position.y+(size.y/2), currentPulseRadius[i]); 
+    }
   }
   
   public boolean collidesWith(DragableImage _img) {
-    float dist = PVector.dist(position, _img.position);
-    return (dist <= size.x || dist <= size.y);
+    float dist = PVector.dist(center(), _img.center());
+    return (dist <= (size.x/2) || dist <= (size.y/2));
+  }
+  
+  PVector center() {
+    return new PVector(position.x+(size.x/2), position.y+(size.y/2)); 
   }
 }
 
 public class DragableImage {
-  PVector startPosition;
-  PVector position;
-  PVector size;
-  PImage img;
-  boolean isDragging;
+  private PVector startPosition;
+  private PVector position;
+  private PVector size;
+  private Gif gifImage;
+  private boolean isDragging;
   
-  DragableImage(PVector _position, PVector _size, PImage _image) {
+  private color pulseStrokeColor = #03aa77;
+  private float pulseStrokeWeight = 1.5; 
+  private int numberOfPulse = 5; 
+  private float[] currentPulseRadius = new float[numberOfPulse];  
+  private float pulseRadiusSpeed = .8;
+  private float maxPulseRadius = 200;
+  private float pulseSpacing = 15;
+  
+  DragableImage(PVector _position, PVector _size, Gif _gifImage) {
     startPosition = new PVector(_position.x, _position.y);
     position = _position;
     size = _size;
-    img = _image;
+    gifImage = _gifImage;    
+    gifImage.play();
+    resetPulse();
+  }
+  
+  public void resetPulse() {
+    for (int i = 0; i < numberOfPulse; i++) {
+      currentPulseRadius[i] = (i*pulseSpacing);
+    }
   }
   
   public void reset() {
@@ -44,10 +84,18 @@ public class DragableImage {
   
   public void display(Scene scene) {
     if (isDragging) {
-      position = new PVector(mouseX, mouseY); 
+      position = new PVector(mouseX-(size.x/2), mouseY-(size.y/2)); 
+    } else {
+      fill(color(0,0,0,1));
+      stroke(pulseStrokeColor);
+      strokeWeight(pulseStrokeWeight);
+      for (int i = 0; i < numberOfPulse; i++) {
+        currentPulseRadius[i] = (currentPulseRadius[i]+pulseRadiusSpeed) % maxPulseRadius;
+        circle(position.x+(size.x/2), position.y+(size.y/2), currentPulseRadius[i]); 
+      }
     }
     
-    image(img, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
+    image(gifImage, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
   }
   
   public boolean mouseWithin() {
@@ -64,8 +112,9 @@ public class DragableImage {
   }
   
   public void onMousePressed() {
-    if (mouseWithin()) {
+    if (mouseWithin() && !isDragging) {
       isDragging = true;
+      resetPulse();
     }
   }
   
@@ -73,5 +122,9 @@ public class DragableImage {
     if (isDragging) {
       isDragging = false; 
     }
+  }
+  
+  public PVector center() {
+    return new PVector(position.x+(size.x/2), position.y+(size.y/2)); 
   }
 }

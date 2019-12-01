@@ -4,7 +4,11 @@
 public class Scene {
   
   PVector position = new PVector(0, 0);
-  PVector slideVelocity = new PVector(-25, 0);
+  
+  PVector slideVelocity = new PVector(25, 0);  
+  int slideOutDirection = LEFT;
+  int slideInDirection = LEFT;
+  
   color backgroundColor;
   
   int previousSceneIndex;
@@ -19,18 +23,26 @@ public class Scene {
   
   DragableImageTrigger dragableImageTrigger;
   
+  Image[] images;
+  
   Button[] buttons;
+  
+  TextBox[] textBoxes;
+  
+  Arrow[] arrows;
   
   boolean saveParticipantOnLeave;
   
   // The scene class' constructor
   // Defines the needed parameters a scene object
   // when creating an instance
-  Scene (Title _title, color _backgroundColor, DragableImage image, DragableImageTrigger trigger, int _nextSceneIndex) {
+  Scene (Title _title, color _backgroundColor, DragableImage image, DragableImageTrigger trigger, Arrow[] _arrows, Image[] _images, int _nextSceneIndex) {
     title = _title;
     backgroundColor = _backgroundColor;
     dragableImage = image;
     dragableImageTrigger = trigger;
+    images = _images;
+    arrows = _arrows;
     nextSceneIndex = _nextSceneIndex;
   }
   
@@ -41,9 +53,18 @@ public class Scene {
     saveParticipantOnLeave = _saveParticipantOnLeave;
   }
   
-  public boolean slideOut() {
-    if (position.x+width > 0) {
-      position.add(slideVelocity);
+  Scene (Title _title, color _backgroundColor, Button[] _buttons, TextBox[] _textBoxes, boolean _saveParticipantOnLeave) {
+    title = _title;
+    backgroundColor = _backgroundColor;
+    buttons = _buttons;
+    textBoxes = _textBoxes;
+    saveParticipantOnLeave = _saveParticipantOnLeave;
+  }
+  
+  public boolean slideOut() {    
+    boolean insideTheScreen = (slideOutDirection == LEFT ? position.x+width > 0 : position.x < width);
+    if (insideTheScreen) {
+      position.add(slideOutDirection == LEFT ? new PVector(-slideVelocity.x, -slideVelocity.y) : slideVelocity);
       return false;
     } else {      
       return true; 
@@ -51,8 +72,9 @@ public class Scene {
   }
   
   public boolean slideIn() {
-    if (position.x > 0) {
-      position.add(slideVelocity);
+    boolean outsideTheScreen = (slideInDirection == LEFT ? position.x > 0 : position.x < 0);
+    if (outsideTheScreen) {
+      position.add(slideInDirection == LEFT ? new PVector(-slideVelocity.x, -slideVelocity.y) : slideVelocity);
       return false;
     } else {      
       return true; 
@@ -72,10 +94,34 @@ public class Scene {
     noStroke();
     fill(backgroundColor);    
     rect(position.x, position.y, width, height);
+
+    if (images != null) {
+      for (int i = 0; i < images.length; i++) {
+        images[i].display(this); 
+      }
+    }
+    
+    if (arrows != null) {
+      for (int i = 0; i < arrows.length; i++) {
+        arrows[i].display(this); 
+      }
+    }
     
     // if this scene has a title
     // call the title object's display function
-    if (title != null) title.display(this);   
+    if (title != null) title.display(this);          
+    
+    if (textBoxes != null) {
+      for (int i = 0; i < textBoxes.length; i++) {
+        textBoxes[i].display(this); 
+      }
+    }
+    
+    if (buttons != null) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].display(this); 
+      }
+    }
     
     if (dragableImage != null) {
       if (dragableImageTrigger != null) {
@@ -88,12 +134,6 @@ public class Scene {
       
       dragableImage.display(this);
       dragableImage.boundariesCheck(this);
-    }
-    
-    if (buttons != null) {
-      for (int i = 0; i < buttons.length; i++) {
-        buttons[i].display(this); 
-      }
     }
   }
   
