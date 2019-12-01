@@ -85,14 +85,6 @@ public class DragableImage {
   public void display(Scene scene) {
     if (isDragging) {
       position = new PVector(mouseX-(size.x/2), mouseY-(size.y/2)); 
-    } else {
-      fill(color(0,0,0,1));
-      stroke(pulseStrokeColor);
-      strokeWeight(pulseStrokeWeight);
-      for (int i = 0; i < numberOfPulse; i++) {
-        currentPulseRadius[i] = (currentPulseRadius[i]+pulseRadiusSpeed) % maxPulseRadius;
-        circle(position.x+(size.x/2), position.y+(size.y/2), currentPulseRadius[i]); 
-      }
     }
     
     image(gifImage, scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
