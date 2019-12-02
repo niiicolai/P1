@@ -16,7 +16,7 @@ public class Title {
   // The color of the title's text
   private color textColor = #33daf8;  
   
-  private int txtSize = 30;
+  private int txtSize;
   
   private int align;
   
