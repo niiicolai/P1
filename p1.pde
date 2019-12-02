@@ -22,7 +22,7 @@ void setup () {
   // Set Processing display size
   size (1000, 700);
   
-  frameRate(60);
+  frameRate(30);
   
   font = createFont(fontName, 32);
   font2 = createFont(fontName2, 16);
