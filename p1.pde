@@ -24,7 +24,7 @@ void setup () {
   
   frameRate(60);
   
-  font = createFont(fontName, 32);
+  font = createFont(fontName, 30);
   font2 = createFont(fontName2, 16);
   
   participantDatum = new ParticipantDatum();
@@ -32,7 +32,25 @@ void setup () {
   data = new Data();
   data.load();
   println(data.participantdata.size());
-  String dummyText = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.";
+  
+  String questionOne = "Would you replace your wallet with a microchip implant?";
+  String[] noPage = new String[]{
+    "A microchip implant is the property of its owner, and is only the size of a rice grain. It can only contain the data that is given by the owner, and can only be used at authorized terminals. The microchip implant can be used as an electronic handbag that can’t be lost. It can contain everyday things such as train tickets, fitness cards, credit cards, etc.",    
+    "Just like a phone can, and often contains, credit card, tickets, and other everyday use items, the microchip implant can do the same. However, the microchip implant will not run out of battery, since it is powered by the signal sent by the designated terminal, and the microchip is not hooked up to the internet. This, in terms of use, is just another way to carry everyday use items, at all times, without having to think about remembering, wallet, bag, phone, and other things one may carry with them when going outside."
+  };
+  String[] yesPage = new String[]{
+    "Microchip implants is sometimes seen as something futuristic, however, there are already as many as 5000+ people who already use microchip implants in their hands in everyday life. One of the more common uses for the microchip implants is to be used as fitness cards to their fitness center, and train tickets for those who often travels by train. The microchip implant is for this reason also referred to as “An electronic handbag”.",    
+    "Microchip implants are only the size of a grain of rice, and leaves little, to no scar at all. The implant itself is very easy to get, and only takes 5 – 10 minutes to implant, and can be removed just as quickly."
+  };
+  String[] infoPage1 = new String[]{
+    "The microchip implant itself doesn’t contain any data. It contains a code that can be scanned by specific scanners, just like a credit card can’t be scanned anywhere, but only at authorized terminals. ",
+    "The microchip implant, in terms of how it works, uses radio identification frequency, which is a frequency that is right now used to identify products, animals, or access cards to limited areas. This technology only works together with its intended receiver, which means that the info from the microchip can’t be accessed by someone from the outside."
+  };
+  String[] infoPage2 = new String[]{
+    "Microchip implants, as of now, are most often seen in medical patients, and are used by doctors and nurses to quickly check the patients medical history, so that action can be taken more swiftly. This is extremely useful in dire situations where a patient is either passed out, or in other conditions where time is of the essence. ",
+    "This is not widely used around the world yet, which means that the hospitals don’t necessarily know what patients have a microchip, and who doesn’t. This makes it hard for hospitals to determine when to check the patients for microchip implants, however, if this was more common, it would become second nature for hospitals to check for a microchip implant."
+  };
+  String questionTwo = "Do you have a positive attitude towards human microchip implant?";  
   
   // Create an instance of an array
   scenes = new Scene[] {
@@ -58,77 +76,61 @@ void setup () {
       1
     ),
     new Scene(
-      new Title("Lorem ipsum dolor sit amet?", new PVector (200, height/2), new PVector (width-400, 50), CENTER, 22), color(255),
+      new Title(questionOne, new PVector (200, height/2), new PVector (width-400, 80), CENTER, 22), color(255),
       new Button[]{
         new Button(new PVector (0, 0), new PVector (150, height), "NO", 2, true, RIGHT),
         new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 3, true, LEFT)
       }, false
     ),
     new Scene(
-      new Title("LAST ANSWER WAS NO", new PVector (0, 50), new PVector (width-150, 50), CENTER, 22), color(255),
+      new Title("What could a microchip be used for?", new PVector (0, 50), new PVector (width-150, 50), CENTER, 22), color(255),
       new Button[]{
         //new Button(new PVector (0, 0), new PVector (200, height), "PREVIOUS", 0, false),
         new Button(new PVector (width-150, 0), new PVector (150, height), 3, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
+        new TextBox(noPage[0], new PVector (50, 100), new PVector (width-250, 150), LEFT),
+        new TextBox(noPage[1], new PVector (50, 270), new PVector (width-250, 165), LEFT),
       }, false
     ),
     new Scene(
-      new Title("LAST ANSWER WAS YES", new PVector (0, 50), new PVector (width-150, 50), CENTER, 22), color(255),
+      new Title("Microchip implants as of now", new PVector (0, 50), new PVector (width-150, 50), CENTER, 22), color(255),
       new Button[]{
         //new Button(new PVector (0, 0), new PVector (200, height), "PREVIOUS", 0, false),
         new Button(new PVector (width-150, 0), new PVector (150, height), 4, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyText, new PVector (50, 100), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyText, new PVector (50, 270), new PVector (width-250, 150), LEFT),
-        new TextBox(dummyText, new PVector (50, 440), new PVector (width-250, 150), LEFT),
+        new TextBox(yesPage[0], new PVector (50, 100), new PVector (width-250, 150), LEFT),
+        new TextBox(yesPage[1], new PVector (50, 270), new PVector (width-250, 150), LEFT),
       }, false
     ),
     new Scene(
-      new Title("Euismod tincidunt ut laoreet dolore", new PVector (200, 50), new PVector (width-400, 50), CENTER, 22), color(255),
+      new Title("The technology behind it", new PVector (200, 50), new PVector (width-400, 50), CENTER, 22), color(255),
       new Button[]{
         new Button(new PVector (0, 0), new PVector (150, height), 3, false, RIGHT, LEFT),
         new Button(new PVector (width-150, 0), new PVector (150, height), 5, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
+        new TextBox(infoPage1[0], new PVector (200, 100), new PVector (width-400, 170), LEFT),
+        new TextBox(infoPage1[1], new PVector (200, 290), new PVector (width-400, 170), LEFT),
       }, false
     ),
     new Scene(
-      new Title("Ut wisi enim ad minim veniamr sit amet", new PVector (200, 50), new PVector (width-400, 50), CENTER, 22), color(255),
+      new Title("Medical patients", new PVector (200, 50), new PVector (width-400, 50), CENTER, 22), color(255),
       new Button[]{
         new Button(new PVector (0, 0), new PVector (150, height), 4, false, RIGHT, LEFT),
         new Button(new PVector (width-150, 0), new PVector (150, height), 6, false, LEFT, RIGHT)
       },
       new TextBox[]{
-        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
+        new TextBox(infoPage2[0], new PVector (200, 100), new PVector (width-400, 170), LEFT),
+        new TextBox(infoPage2[1], new PVector (200, 290), new PVector (width-400, 170), LEFT),
       }, false
     ),
     new Scene(
-      new Title("Non habent claritatem insitam", new PVector (200, 50), new PVector (width-400, 50), CENTER, 22), color(255),
+      new Title(questionTwo, new PVector (200, height/2), new PVector (width-400, 80), CENTER, 22), color(255),
       new Button[]{
-        new Button(new PVector (0, 0), new PVector (150, height), 5, false, RIGHT, LEFT),
-        new Button(new PVector (width-150, 0), new PVector (150, height), 7, false, LEFT, RIGHT)
-      },
-      new TextBox[]{
-        new TextBox(dummyText, new PVector (200, 100), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 290), new PVector (width-400, 170), LEFT),
-        new TextBox(dummyText, new PVector (200, 480), new PVector (width-400, 170), LEFT),
-      }, false
-    ),
-    new Scene(
-      new Title("Sed do eiusmod tempor incididunt?", new PVector (200, height/2), new PVector (width-400, 50), CENTER, 30), color(255),
-      new Button[]{
-        new Button(new PVector (0, 0), new PVector (150, height), "NO", 8, true, RIGHT),
-        new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 8, true, LEFT)
+        new Button(new PVector (0, 0), new PVector (150, height), "NO", 7, true, RIGHT),
+        new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 7, true, LEFT)
       }, true
     ),
     new Scene(
