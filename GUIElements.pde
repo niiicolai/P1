@@ -14,7 +14,7 @@ public class Title {
   private PVector size;
   
   // The color of the title's text
-  private color textColor = #33daf8;  
+  private color textColor = #096192;  
   
   private int txtSize;
   
@@ -104,8 +104,8 @@ public class Button {
  
   PVector position;
   PVector size;
-  color fillColor = #33daf8;
-  color defFillColor = #33daf8;
+  color fillColor = #096192;
+  color defFillColor = #096192;
   color clickFillColor = #24aae2;
   color textFillColor = color(255);
   
@@ -238,8 +238,8 @@ public class TextBox {
   private PVector size;
 
   private float txtSize = 20;
-  private color boxFillColor = #33daf8;
-  private color boxStrokeColor = #33daf8; 
+  private color boxFillColor = #096192;
+  private color boxStrokeColor = #096192; 
   
   private int align;
   
@@ -270,8 +270,9 @@ public class TextBox {
     textAlign(align);     
     
     for (int i = 0; i < textPoints.length; i++) {
-      float yPos = position.y+topPadding;
-      PVector pos = new PVector (position.x+textIndent, yPos+(lineHeight*i));
+      float yPos = position.y+topPadding+(lineHeight*i);
+      
+      PVector pos = new PVector (position.x+textIndent, yPos);
       textPoints[i].display(scene, pos); 
     }
         

@@ -25,34 +25,52 @@ void setup () {
   frameRate(30);
 
   font = createFont(fontName, 40);
-  font2 = createFont(fontName2, 25);
+  font2 = createFont(fontName2, 24);
 
   participantDatum = new ParticipantDatum();
 
   data = new Data();
   data.load();
 
+  String frontPageTitle = "DRAG AND INSERT THE HUMAN IMPLANT CHIP";
+
   String questionOne = "Would you replace your wallet with a microchip implant?";
+  
+  String noPageTitle = "A microchip compared to your phone";
   String[] noPage = new String[]{
-    "A microchip implant is the property of its owner, and is only the size of a rice grain.",
-    "It can only contain the data that is given by the owner, and can only be used at authorized terminals.",
-    "The microchip implant can be used as an electronic handbag that can’t be lost.",
-    "It can contain everyday things such as train tickets, fitness cards, credit cards, etc.", 
-    //"Just like a phone can, and often contains, credit card, tickets, and other everyday use items, the microchip implant can do the same. However, the microchip implant will not run out of battery, since it is powered by the signal sent by the designated terminal, and the microchip is not hooked up to the internet. This, in terms of use, is just another way to carry everyday use items, at all times, without having to think about remembering, wallet, bag, phone, and other things one may carry with them when going outside."
+    "A microchip implant stores the same amount of personal information as a phone",
+    "Phones are more exposed to the threat of security breach since it’s connected to a network and the \ninternet and can be accessed from a distance. ",
+    "A microchip doesn’t contain a power source and can only be accessed when in proximity of a chip reader. ",
+      "Since the implementation of voice activation programs such as Siri, your phone needs to be listening\n all the time for the activation phrase. Therefore, you sometimes experience targeted ads about things you have only talked about. ",
+    "If you are afraid of being tracked, then your mobile phone and internet history is a much bigger threat\n than any microchip can ever be. ",
   };
+  
+  String yesPageTitle = "What is a microchip";
   String[] yesPage = new String[]{
-    "Microchip implants is sometimes seen as something futuristic, however, there are already as many as 5000+ people who already use microchip implants in their hands in everyday life. One of the more common uses for the microchip implants is to be used as fitness cards to their fitness center, and train tickets for those who often travels by train. The microchip implant is for this reason also referred to as “An electronic handbag”.", 
-    "Microchip implants are only the size of a grain of rice, and leaves little, to no scar at all. The implant itself is very easy to get, and only takes 5 – 10 minutes to implant, and can be removed just as quickly."
+    "A microchip is only the size of a grain of rice", 
+    "It leaves no scar or mark when implanted",
+    "It only takes 5 – 10 minutes to implant, and can be removed just as quickly ",
+    "One of the more common uses for the microchip implants is to be used as fitness cards to their fitness center\n, and train tickets for those who often travel by train. The microchip implant is for this reason also referred to as “An electronic handbag”. ",
+    "Microchip implants is sometimes seen as something futuristic, however, there are already as many as 5000+ people\n who already use microchip implants in their hands in everyday life. ",
   };
+  
+  String infoPage1Title = "The technology behind it";
   String[] infoPage1 = new String[]{
-    "The microchip implant itself doesn’t contain any data. It contains a code that can be scanned by specific scanners, just like a credit card can’t be scanned anywhere, but only at authorized terminals. ", 
-    "The microchip implant, in terms of how it works, uses radio identification frequency, which is a frequency that is right now used to identify products, animals, or access cards to limited areas. This technology only works together with its intended receiver, which means that the info from the microchip can’t be accessed by someone from the outside."
+    "The microchip implant itself doesn’t contain any data. It contains a code that can be scanned by specific\n scanners, just like a credit card can’t be scanned anywhere, but only at authorized terminals. ", 
+    "The microchip implant, in terms of how it works, uses radio identification frequency, which is a frequency\n that is right now used to identify products, animals, or access cards to limited areas. This technology only works together with its intended receiver, which means that the info from the microchip can’t be accessed by someone from the outside."
   };
+  
+  String infoPage2Title = "Medical patients";
   String[] infoPage2 = new String[]{
-    "Microchip implants, as of now, are most often seen in medical patients, and are used by doctors and nurses to quickly check the patients medical history, so that action can be taken more swiftly. This is extremely useful in dire situations where a patient is either passed out, or in other conditions where time is of the essence. ", 
-    "This is not widely used around the world yet, which means that the hospitals don’t necessarily know what patients have a microchip, and who doesn’t. This makes it hard for hospitals to determine when to check the patients for microchip implants, however, if this was more common, it would become second nature for hospitals to check for a microchip implant."
+    "Microchip implants, as of now, are most often seen in medical patients, and are used by doctors and\n nurses to quickly check the patients' medical history, so that action can be taken more swiftly. ", 
+    "This is extremely useful in dire situations where a patient has either passed out, or in other conditions\n where time is of the essence. This is not widely used around the world yet, which means that the hospitals don’t necessarily know what patients have a microchip, and who doesn’t.",
+    "If everyone had a microchip implant, hospitals could check and take action much faster than today",
+    "It would become second nature for doctors to check for implants as soon as they get a new patient "
   };
-  String questionTwo = "Did the information have a positive influence on your attitude about human implant chips?";  
+  
+  String questionTwo = "Did the information have a positive influence on your attitude about human implant chips?";
+  
+  String thankYouPageTxt = "Thank you for your participation";
 
   int titleFontSize = 30;
   PVector bigTitlePosition = new PVector(0, 30);
@@ -66,6 +84,14 @@ void setup () {
   
   PVector smallTextBoxPosition = new PVector(200, 100);
   PVector smallTextBoxSize = new PVector(width-400, height-200);
+  
+  PVector buttonLeftPos = new PVector (0, 0);
+  PVector buttonRightPos = new PVector (width-150, 0);
+  
+  PVector buttonSize = new PVector (150, height);
+  
+  PVector questionPosition = new PVector (200, height/2);
+  PVector questionSize = new PVector (width-400, 100);
 
   // Create an instance of an array
   scenes = new Scene[] {
@@ -73,7 +99,7 @@ void setup () {
     // create a new instance of the frontpage object 
     // and add to the scene array
     new Scene(
-    new Title("INSERT THE HUMAN IMPLANT CHIP", new PVector (0, 50), new PVector (width-230, 50), CENTER, 30), color(255), 
+    new Title(frontPageTitle, new PVector (0, 50), new PVector (width-230, 50), CENTER, titleFontSize), color(255), 
     new DragableImage(new PVector(100, (height/2)-70), new PVector(150, 190), new Gif(this, "chip.gif")), 
     new DragableImageTrigger(new PVector(width-280, (height/2)), new PVector(50, 50)), 
     new Arrow[]{
@@ -90,59 +116,59 @@ void setup () {
     1
     ), 
     new Scene(
-    new Title(questionOne, new PVector (200, height/2), new PVector (width-400, 80), CENTER, titleFontSize), color(255), 
+    new Title(questionOne, questionPosition, questionSize, CENTER, titleFontSize), color(255), 
     new Button[]{
-      new Button(new PVector (0, 0), new PVector (150, height), "NO", 2, true, RIGHT), 
-      new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 3, true, LEFT)
+      new Button(buttonLeftPos, buttonSize, "NO", 2, true, RIGHT), 
+      new Button(buttonRightPos, buttonSize, "YES", 3, true, LEFT)
     }, false
     ), 
     new Scene(
-    new Title("What could a microchip be used for?", bigTitlePosition, bigTitleSize, CENTER, titleFontSize), color(255), 
+    new Title(noPageTitle, bigTitlePosition, bigTitleSize, CENTER, titleFontSize), color(255), 
     new Button[]{      
-      new Button(new PVector (width-150, 0), new PVector (150, height), 3, false, LEFT, RIGHT)
+      new Button(buttonRightPos, buttonSize, 3, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
       new TextBox(noPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
     }, false
     ), 
     new Scene(
-    new Title("Microchip implants as of now", bigTitlePosition, bigTitleSize, CENTER, titleFontSize), color(255), 
+    new Title(yesPageTitle, bigTitlePosition, bigTitleSize, CENTER, titleFontSize), color(255), 
     new Button[]{      
-      new Button(new PVector (width-150, 0), new PVector (150, height), 4, false, LEFT, RIGHT)
+      new Button(buttonRightPos, buttonSize, 4, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
       new TextBox(yesPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
     }, false
     ), 
     new Scene(
-    new Title("The technology behind it", smallTitlePosition, smallTitleSize, CENTER, titleFontSize), color(255), 
+    new Title(infoPage1Title, smallTitlePosition, smallTitleSize, CENTER, titleFontSize), color(255), 
     new Button[]{
-      new Button(new PVector (0, 0), new PVector (150, height), 3, false, RIGHT, LEFT), 
-      new Button(new PVector (width-150, 0), new PVector (150, height), 5, false, LEFT, RIGHT)
+      new Button(buttonLeftPos, buttonSize, 3, false, RIGHT, LEFT), 
+      new Button(buttonRightPos, buttonSize, 5, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
       new TextBox(infoPage1, smallTextBoxPosition, smallTextBoxSize, LEFT),  
     }, false
     ), 
     new Scene(
-    new Title("Medical patients", smallTitlePosition, smallTitleSize, CENTER, titleFontSize), color(255), 
+    new Title(infoPage2Title, smallTitlePosition, smallTitleSize, CENTER, titleFontSize), color(255), 
     new Button[]{
-      new Button(new PVector (0, 0), new PVector (150, height), 4, false, RIGHT, LEFT), 
-      new Button(new PVector (width-150, 0), new PVector (150, height), 6, false, LEFT, RIGHT)
+      new Button(buttonLeftPos, buttonSize, 4, false, RIGHT, LEFT), 
+      new Button(buttonRightPos, buttonSize, 6, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
       new TextBox(infoPage2, smallTextBoxPosition, smallTextBoxSize, LEFT),  
     }, false
     ), 
     new Scene(
-    new Title(questionTwo, new PVector (200, height/2), new PVector (width-400, 100), CENTER, titleFontSize), color(255), 
+    new Title(questionTwo, questionPosition, questionSize, CENTER, titleFontSize), color(255), 
     new Button[]{
-      new Button(new PVector (0, 0), new PVector (150, height), "NO", 7, true, RIGHT), 
-      new Button(new PVector (width-150, 0), new PVector (150, height), "YES", 7, true, LEFT)
+      new Button(buttonLeftPos, buttonSize, "NO", 7, true, RIGHT), 
+      new Button(buttonRightPos, buttonSize, "YES", 7, true, LEFT)
     }, true
     ), 
     new Scene(
-    new Title("Thank you for your participation", new PVector (200, height/2), new PVector (width-400, 50), CENTER, titleFontSize), color(255), 
+    new Title(thankYouPageTxt, questionPosition, questionSize, CENTER, titleFontSize), color(255), 
     new SceneLoader(new PVector (200, height/2), new PVector (width-400, 50)), 0
     )
   };
