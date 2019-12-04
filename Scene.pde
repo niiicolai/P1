@@ -5,7 +5,7 @@ public class Scene {
   
   PVector position = new PVector(0, 0);
   
-  PVector slideVelocity = new PVector(40, 0);  
+  PVector slideVelocity = new PVector(60, 0);  
   PVector slideVelocityDamper = new PVector(2, 0); 
   int slideOutDirection = LEFT;
   int slideInDirection = LEFT;

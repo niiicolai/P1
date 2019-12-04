@@ -7,8 +7,8 @@ public class DragableImageTrigger {
   private float pulseStrokeWeight = 1.5;
   private int numberOfPulse = 5; 
   private float[] currentPulseRadius = new float[numberOfPulse];  
-  private float pulseRadiusSpeed = .8;
-  private float maxPulseRadius = 120;
+  private float pulseRadiusSpeed = 1;
+  private float maxPulseRadius = 130;
   private float pulseSpacing = 25;
   
   DragableImageTrigger(PVector _position, PVector _size) {

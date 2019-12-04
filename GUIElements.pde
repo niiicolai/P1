@@ -237,16 +237,17 @@ public class TextBox {
   private PVector position;
   private PVector size;
 
-  private float txtSize = 20;
+  private float txtSize = 40;
   private color boxFillColor = #096192;
   private color boxStrokeColor = #096192; 
   
   private int align;
   
   //private float textPadding = 30;
-  private float textIndent = 40;
+  private float textIndent = 50;
   private float topPadding = 50;
   private float lineHeight = 50;
+  private float spaceBetween = 60;
   private float cornerRadius = 5;
   
   // The title's constructor
@@ -269,11 +270,13 @@ public class TextBox {
     textFont(font2);
     textAlign(align);     
     
-    for (int i = 0; i < textPoints.length; i++) {
-      float yPos = position.y+topPadding+(lineHeight*i);
-      
-      PVector pos = new PVector (position.x+textIndent, yPos);
-      textPoints[i].display(scene, pos); 
+    float lastY = scene.position.y+position.y+topPadding;
+    float xPos = scene.position.x+position.x+textIndent;
+    for (int i = 0; i < textPoints.length; i++) {    
+      if (i > 0) lastY += lineHeight*textPoints[i-1].lines;
+      if (i > 0) lastY += spaceBetween;
+
+      textPoints[i].display(xPos, lastY, size); 
     }
         
     //text(txt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2), size.x-textPadding, size.y);
@@ -285,21 +288,27 @@ public class TextPoint {
   color txtColor = color (255);
   String txt;
   
-  float pointRadius = 10;
-  PVector pointOffset = new PVector(20, 10);
+  float pointRadius = 13;
+  PVector pointOffset = new PVector(25, 18);
+  
+  int lines = 1;
   
   TextPoint(String _txt) {
     txt = _txt;
+    
+    float textLength = txt.length();
+    if (textLength > 140 && textLength < 260) lines = 2;
+    else if (textLength > 260) lines = 3;
+    
   }
   
-  public void display(Scene scene, PVector position) {
-    float xPos = scene.position.x+position.x;
-    float yPos = scene.position.y+position.y;
+  public void display(float x, float y, PVector size) {
+
     fill(txtColor);
-    text(txt, xPos, yPos);
+    text(txt, x, y-pointOffset.y, size.x-40, size.y);
     
     noStroke();
-    circle(xPos-pointOffset.x, yPos-pointOffset.y, pointRadius);    
+    circle(x-pointOffset.x, y, pointRadius);    
   }
 }
 
