@@ -20,7 +20,7 @@ PFont font2;
 
 void setup () {
   // Set Processing display size
-  size (1440, 900);
+  fullScreen();
 
   frameRate(30);
 
@@ -73,6 +73,7 @@ void setup () {
   String thankYouPageTxt = "Thank you for your participation";
 
   int titleFontSize = 30;
+  int frontPageFontSize = 40;
   PVector bigTitlePosition = new PVector(0, 30);
   PVector bigTitleSize = new PVector(width-150, 50);
   
@@ -99,7 +100,7 @@ void setup () {
     // create a new instance of the frontpage object 
     // and add to the scene array
     new Scene(
-    new Title(frontPageTitle, new PVector (0, 50), new PVector (width-230, 50), CENTER, titleFontSize), color(255), 
+    new Title(frontPageTitle, new PVector (0, 50), new PVector (width, 50), CENTER, frontPageFontSize), color(255), 
     new DragableImage(new PVector(100, (height/2)-70), new PVector(150, 190), new Gif(this, "chip.gif")), 
     new DragableImageTrigger(new PVector(width-280, (height/2)), new PVector(50, 50)), 
     new Arrow[]{
