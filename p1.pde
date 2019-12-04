@@ -13,8 +13,8 @@ Scene currentScene;
 // A reference to the next scene
 Scene nextScene;
 
-String fontName = "Roboto-Bold";
-String fontName2 = "Roboto-Regular";
+String fontName = "Roboto-Bold.ttf";
+String fontName2 = "Roboto-Regular.ttf";
 PFont font;
 PFont font2;
 
