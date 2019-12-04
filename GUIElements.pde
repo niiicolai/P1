@@ -38,41 +38,6 @@ public class Title {
   }
 }
 
-public class TextBox {
-  public String txt;
-  
-  private PVector position;
-  private PVector size;
-
-  private float txtSize = 20;
-  private color boxFillColor = #33daf8;
-  private color boxStrokeColor = #33daf8; 
-  
-  private color textColor = color(255);  
-  private int align;
-  
-  private float textPadding = 30;
-  
-  // The title's constructor
-  TextBox(String _text, PVector _position, PVector _size, int _align) {
-    txt = _text;
-    position = new PVector(_position.x, _position.y);
-    size = new PVector(_size.x, _size.y);
-    align = _align;
-  }
-  
-  public void display(Scene scene) {
-    fill(boxFillColor);
-    stroke(boxStrokeColor);
-    rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y);
-    fill(textColor);
-    textSize(txtSize);
-    textFont(font2);
-    textAlign(align);     
-    text(txt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2), size.x-textPadding, size.y);
-  }
-}
-
 public class Image {
   
   private PVector position;
@@ -263,6 +228,77 @@ public class Button {
   boolean mouseWithin() {
     return (mouseX >= position.x && mouseX <= position.x+size.x &&
         mouseY >= position.y && mouseY <= position.y+size.y);
+  }
+}
+
+public class TextBox {
+  public TextPoint[] textPoints;
+  
+  private PVector position;
+  private PVector size;
+
+  private float txtSize = 20;
+  private color boxFillColor = #33daf8;
+  private color boxStrokeColor = #33daf8; 
+  
+  private int align;
+  
+  //private float textPadding = 30;
+  private float textIndent = 40;
+  private float topPadding = 50;
+  private float lineHeight = 50;
+  private float cornerRadius = 5;
+  
+  // The title's constructor
+  TextBox(String[] _text, PVector _position, PVector _size, int _align) {
+    textPoints = new TextPoint[_text.length];
+    for (int i = 0; i < _text.length; i++) {
+      textPoints[i] = new TextPoint(_text[i]);
+    }
+    position = new PVector(_position.x, _position.y);
+    size = new PVector(_size.x, _size.y);
+    align = _align;
+  }
+  
+  public void display(Scene scene) {
+    fill(boxFillColor);
+    stroke(boxStrokeColor);
+    rect(scene.position.x+position.x, scene.position.y+position.y, size.x, size.y, cornerRadius);
+
+    textSize(txtSize);
+    textFont(font2);
+    textAlign(align);     
+    
+    for (int i = 0; i < textPoints.length; i++) {
+      float yPos = position.y+topPadding;
+      PVector pos = new PVector (position.x+textIndent, yPos+(lineHeight*i));
+      textPoints[i].display(scene, pos); 
+    }
+        
+    //text(txt, scene.position.x+position.x+(textPadding/2), scene.position.y+position.y+(textPadding/2), size.x-textPadding, size.y);
+  }
+}
+
+public class TextPoint {
+  
+  color txtColor = color (255);
+  String txt;
+  
+  float pointRadius = 10;
+  PVector pointOffset = new PVector(20, 10);
+  
+  TextPoint(String _txt) {
+    txt = _txt;
+  }
+  
+  public void display(Scene scene, PVector position) {
+    float xPos = scene.position.x+position.x;
+    float yPos = scene.position.y+position.y;
+    fill(txtColor);
+    text(txt, xPos, yPos);
+    
+    noStroke();
+    circle(xPos-pointOffset.x, yPos-pointOffset.y, pointRadius);    
   }
 }
 
