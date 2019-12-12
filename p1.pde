@@ -131,6 +131,8 @@ void setup () {
     }, 
     new TextBox[]{
       new TextBox(noPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
+    },
+      new Image[] { new Image(new PVector (width-670, 290), new PVector (480, 540), loadImage("phone.png")),
     }, false
     ), 
     new Scene(
@@ -140,6 +142,8 @@ void setup () {
     }, 
     new TextBox[]{
       new TextBox(yesPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
+    },
+      new Image[] { new Image(new PVector (width-750, 220), new PVector (480, 500), loadImage("reader.png")),
     }, false
     ), 
     new Scene(
@@ -150,6 +154,8 @@ void setup () {
     }, 
     new TextBox[]{
       new TextBox(infoPage1, smallTextBoxPosition, smallTextBoxSize, LEFT),  
+    },
+      new Image[] { new Image(new PVector (width-750, 220), new PVector (680, 800), loadImage("chip-green.png")),
     }, false
     ), 
     new Scene(
@@ -160,6 +166,8 @@ void setup () {
     }, 
     new TextBox[]{
       new TextBox(infoPage2, smallTextBoxPosition, smallTextBoxSize, LEFT),  
+    },
+      new Image[] { new Image(new PVector (width-640, 340), new PVector (480, 600), loadImage("chip-red.png")),
     }, false
     ), 
     new Scene(

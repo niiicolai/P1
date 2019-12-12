@@ -63,12 +63,13 @@ public class Scene {
     nextSceneIndex = _nextSceneIndex;
   }
   
-  Scene (Title _title, color _backgroundColor, Button[] _buttons, TextBox[] _textBoxes, boolean _saveParticipantOnLeave) {
+  Scene (Title _title, color _backgroundColor, Button[] _buttons, TextBox[] _textBoxes, Image[] tempImages, boolean _saveParticipantOnLeave) {
     title = _title;
     backgroundColor = _backgroundColor;
     buttons = _buttons;
     textBoxes = _textBoxes;
     saveParticipantOnLeave = _saveParticipantOnLeave;
+    images = tempImages;
   }
   
   public boolean slideOut() {    
@@ -114,6 +115,12 @@ public class Scene {
     fill(backgroundColor);    
     rect(position.x, position.y, width, height);
 
+    if (textBoxes != null) {
+      for (int i = 0; i < textBoxes.length; i++) {
+        textBoxes[i].display(this); 
+      }
+    }
+
     if (images != null) {
       for (int i = 0; i < images.length; i++) {
         images[i].display(this); 
@@ -132,11 +139,7 @@ public class Scene {
     // call the title object's display function
     if (title != null) title.display(this);          
     
-    if (textBoxes != null) {
-      for (int i = 0; i < textBoxes.length; i++) {
-        textBoxes[i].display(this); 
-      }
-    }
+    
     
     if (buttons != null) {
       for (int i = 0; i < buttons.length; i++) {
