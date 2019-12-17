@@ -53,6 +53,9 @@ public class Scene {
   // A reference to an arrow array
   Arrow[] arrows;
   
+  // A reference to a scene indicator object
+  SceneIndicator sceneIndicator;
+  
   // A reference to a scene loader object
   SceneLoader sceneLoader;
   
@@ -107,6 +110,22 @@ public class Scene {
     textBoxes = _textBoxes;
     saveParticipantOnLeave = _saveParticipantOnLeave;
     images = tempImages;
+  }
+  
+  // The scene class' 5. constructor
+  // Used in cases when buttons, textboxes, images, saving and scene indications are neccesary
+  // This constructor is added after the implementation of the report was written
+  // and is therefore not mentioned
+  Scene (Title _title, color _backgroundColor, Button[] _buttons, TextBox[] _textBoxes, Image[] tempImages, SceneIndicator tempSceneIndicator, boolean _saveParticipantOnLeave) {
+    
+    // store the values passed to the constructor in a suitable variable
+    title = _title;
+    backgroundColor = _backgroundColor;
+    buttons = _buttons;
+    textBoxes = _textBoxes;
+    saveParticipantOnLeave = _saveParticipantOnLeave;
+    images = tempImages;
+    sceneIndicator = tempSceneIndicator;
   }
   
   // Call to slide the scene out of the display in the given direction from its current position
@@ -209,7 +228,7 @@ public class Scene {
         // call the images display function
         images[i].display(this); 
       }
-    }
+    }    
     
     // if the scene have any arrows
     if (arrows != null) {
@@ -221,6 +240,10 @@ public class Scene {
         arrows[i].display(this); 
       }
     }
+    
+    // if the scene have a scene indicator
+    // call the scene indicator's display function
+    if (sceneIndicator != null) sceneIndicator.display(this);
     
     // if the scene have a scene loader
     // call the scene loader's display function

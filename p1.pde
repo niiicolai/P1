@@ -312,7 +312,26 @@ void setup () {
   boolean noPageSaveOnSceneLeave = false;
   
   // Create an instance of a scene
-  Scene noPageScene = new Scene(noPageTitle, infoScenesBackgroundcolor, noPageButtons, noPageTextboxes, noPageImages, noPageSaveOnSceneLeave);
+  Scene noPageScene = new Scene(noPageTitle, infoScenesBackgroundcolor, noPageButtons, noPageTextboxes, noPageImages, noPageSaveOnSceneLeave);    
+  
+  // Declare the number of scene indicators
+  int numberOfSceneIndicator = 3;
+  
+  // Declare each scenes' indicator number
+  int yesPageIndicatorNumber = 0;
+  int infoPage1IndicatorNumber = 1;
+  int infoPage2IndicatorNumber = 2;
+  
+  // Declare the position of the scene indicator
+  PVector yesSceneIndicatorPosition = new PVector (width/2-130, height-100);
+  
+  // Declare the position of the scene indicator
+  PVector infoSceneIndicatorPosition = new PVector (width/2-50, height-100);
+  
+  // Create an instance of an indicator for each scene where it's neccesary
+  SceneIndicator yesPageSceneIndicator = new SceneIndicator(yesSceneIndicatorPosition, numberOfSceneIndicator, yesPageIndicatorNumber);   
+  SceneIndicator infoPage1SceneIndicator = new SceneIndicator(infoSceneIndicatorPosition, numberOfSceneIndicator, infoPage1IndicatorNumber);   
+  SceneIndicator infoPage2SceneIndicator = new SceneIndicator(infoSceneIndicatorPosition, numberOfSceneIndicator, infoPage2IndicatorNumber); 
   
   // Declare the text used for the title on the yes page scene
   String yesPageTitleText = "What is a microchip";  
@@ -369,7 +388,7 @@ void setup () {
   boolean yesPageSaveOnSceneLeave = false;
   
   // Create an instance of a scene
-  Scene yesPageScene = new Scene(yesPageTitle, infoScenesBackgroundcolor, yesPageButtons, yesPageTextboxes, yesPageImages, yesPageSaveOnSceneLeave);
+  Scene yesPageScene = new Scene(yesPageTitle, infoScenesBackgroundcolor, yesPageButtons, yesPageTextboxes, yesPageImages, yesPageSceneIndicator, yesPageSaveOnSceneLeave);
   
   // Declare a position used for a title on info scenes with two buttons
   PVector infoScenesSmallTitlePosition = new PVector(200, 50);
@@ -458,7 +477,7 @@ void setup () {
   boolean infoPage1SaveParticipantOnLeave = false;
   
   // Create an instance of a scene
-  Scene infoPage1 = new Scene(infoPage1Title, infoScenesBackgroundcolor, infoPage1Buttons, infoPage1Textboxes, infoPage1Images, infoPage1SaveParticipantOnLeave);
+  Scene infoPage1 = new Scene(infoPage1Title, infoScenesBackgroundcolor, infoPage1Buttons, infoPage1Textboxes, infoPage1Images, infoPage1SceneIndicator, infoPage1SaveParticipantOnLeave);
   
   // Declare the index number of previous scene
   int infoPage2PrevSceneIndex = 4;
@@ -498,7 +517,7 @@ void setup () {
   boolean infoPage2SaveParticipantOnLeave = false;
   
   // Create an instance of a scene
-  Scene infoPage2 = new Scene(infoPage2Title, infoScenesBackgroundcolor, infoPage2Buttons, infoPage2Textboxes, infoPage2Images, infoPage2SaveParticipantOnLeave);
+  Scene infoPage2 = new Scene(infoPage2Title, infoScenesBackgroundcolor, infoPage2Buttons, infoPage2Textboxes, infoPage2Images, infoPage2SceneIndicator, infoPage2SaveParticipantOnLeave);
   
   // Declare a text used for the title on the thank you page
   String thankYouPageTxt = "Thank you for your participation";
