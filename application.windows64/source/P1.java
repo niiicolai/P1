@@ -399,7 +399,7 @@ public void setup () {
   
   // Create an instance of an array with images for the yes page
   Image[] yesPageImages = new Image[] {
-    new Image(yesPageImagePosition, yesPageImageSize, noPagePImage)
+    new Image(yesPageImagePosition, yesPageImageSize, yesPagePImage)
   };
   
   // Declare wether or not the yes page should save participant datum on leave

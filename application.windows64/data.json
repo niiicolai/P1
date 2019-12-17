@@ -1,0 +1,34 @@
+[
+  {
+    "dateTime": "2019-12-17 18:58:11",
+    "answers": [{
+      "dateTime": "2019-12-17 18:31:53",
+      "question": "Are you interested in replacing your various cards from your wallet with a Human Microchip Implant?",
+      "answer": "NO"
+    }]
+  },
+  {
+    "dateTime": "2019-12-17 18:58:11",
+    "answers": [{
+      "dateTime": "2019-12-17 18:32:2",
+      "question": "Did the information have a positive influence on your attitude about human implant chips?",
+      "answer": "YES"
+    }]
+  },
+  {
+    "dateTime": "2019-12-17 18:58:11",
+    "answers": [{
+      "dateTime": "2019-12-17 18:57:54",
+      "question": "Are you interested in replacing your various cards from your wallet with a Human Microchip Implant?",
+      "answer": "NO"
+    }]
+  },
+  {
+    "dateTime": "2019-12-17 18:58:11",
+    "answers": [{
+      "dateTime": "2019-12-17 18:58:10",
+      "question": "Did the information have a positive influence on your attitude about human implant chips?",
+      "answer": "NO"
+    }]
+  }
+]
