@@ -7,6 +7,12 @@ class Data {
   // An array list of the partcipant data
   public ArrayList<ParticipantDatum> participantdata = new ArrayList<ParticipantDatum>();
   
+  // The JSON keys in which the data are saved
+  private String dateTimeKey = "dateTime";
+  private String answersKey = "answers";
+  private String questionKey = "question";
+  private String answerkey = "answer";
+  
   // Call whenenver the saved participant data should be loaded again
   // This is done so that new participant data only is applied
   // instead of overwriting the data for each restart
@@ -26,10 +32,10 @@ class Data {
       ParticipantDatum _participantdatum = new ParticipantDatum();
       
       // Set the date time of the participant datum to the value of 'dateTime' saved in the JSON object
-      _participantdatum.dateTime = participantJSONObj.getString("dateTime");
+      _participantdatum.dateTime = participantJSONObj.getString(dateTimeKey);
       
       // Declare a reference of a JSONArray
-      JSONArray _participantAnswers = participantJSONObj.getJSONArray("answers");
+      JSONArray _participantAnswers = participantJSONObj.getJSONArray(answersKey);
       
       // Loop through all the saved answers
       for (int x = 0; x < _participantAnswers.size(); x++) {
@@ -41,13 +47,13 @@ class Data {
         ParticipantAnswer participantAnswer = new ParticipantAnswer();
         
         // Set the datetime of the paticipant answer
-        participantAnswer.dateTime = _participantAnswer.getString("dateTime");
+        participantAnswer.dateTime = _participantAnswer.getString(dateTimeKey);
         
         // Set the question value of the paticipant answer
-        participantAnswer.question = _participantAnswer.getString("question");
+        participantAnswer.question = _participantAnswer.getString(questionKey);
         
         // Set the answer value of the paticipant answer
-        participantAnswer.answer = _participantAnswer.getString("answer");
+        participantAnswer.answer = _participantAnswer.getString(answerkey);
         
         // Add the current created answer to the participantdatum's answers array list
         _participantdatum.answers.add(participantAnswer);
@@ -71,7 +77,7 @@ class Data {
       JSONObject participantJSONObj = new JSONObject();
       
       // Add a key called "dateTime" and the value of the current date time
-      participantJSONObj.setString("dateTime", dateTime());
+      participantJSONObj.setString(dateTimeKey, dateTime());
       
       // Create an instance of a new JSON array
       JSONArray participantJSONAnswers = new JSONArray();
@@ -83,27 +89,27 @@ class Data {
         JSONObject _answerJSONObj = new JSONObject();        
         
          // Add a key called "dateTime" and the value of the answer's date time
-        _answerJSONObj.setString("dateTime", participantdata.get(i).answers.get(x).dateTime);
+        _answerJSONObj.setString(dateTimeKey, participantdata.get(i).answers.get(x).dateTime);
         
         // Add a key called "question" and the value of the answer's question
-        _answerJSONObj.setString("question", participantdata.get(i).answers.get(x).question);
+        _answerJSONObj.setString(questionKey, participantdata.get(i).answers.get(x).question);
         
         // Add a key called "answer" and the value of the answer's answer
-        _answerJSONObj.setString("answer", participantdata.get(i).answers.get(x).answer);
+        _answerJSONObj.setString(answerkey, participantdata.get(i).answers.get(x).answer);
         
         // Add current created JSON object to the reference of an JSON array
         participantJSONAnswers.setJSONObject(x, _answerJSONObj);
       }
       
       // Add that JSON array to the first created JSON object with a key called "answers" and the value of that JSON array
-      participantJSONObj.setJSONArray("answers", participantJSONAnswers);
+      participantJSONObj.setJSONArray(answersKey, participantJSONAnswers);
       
       // Add the first JSON object to the first JSON array
       _participantdata.setJSONObject(i, participantJSONObj);
     }
     
     // Write the first JSON array to JSON file
-    saveJSONArray(_participantdata, "data.json");
+    saveJSONArray(_participantdata, dataPath);
   }    
   
   // Returns a dateTime formatted as "y-m-d H:M:S"
