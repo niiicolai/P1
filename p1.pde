@@ -34,7 +34,7 @@ void setup () {
 
   String frontPageTitle = "DRAG AND INSERT THE HUMAN IMPLANT CHIP";
 
-  String questionOne = "Would you replace your wallet with a microchip implant?";
+  String questionOne = "Are you interested in replacing your various cards from your wallet with a Human Microchip Implant?";
   
   String noPageTitle = "A microchip compared to your phone";
   String[] noPage = new String[]{
@@ -64,7 +64,7 @@ void setup () {
   String infoPage2Title = "Medical patients";
   String[] infoPage2 = new String[]{
     "Microchip implants, as of now, are most often seen in medical patients, and are used by doctors and nurses to quickly check the patients' medical history, so that action can be taken more swiftly. ", 
-    "This is extremely useful in dire situations where a patient has either passed out, or in other conditions where time is of the essence. This is not widely used around the world yet, which means that the hospitals don’t necessarily know what patients have a microchip, and who doesn’t.",
+    "This is extremely useful in dire situations where a patient has either passed out, or in other conditions where time is of the essence.",
     "If everyone had a microchip implant, hospitals could check and take action much faster than today",
     "It would become second nature for doctors to check for implants as soon as they get a new patient "
   };
@@ -102,16 +102,16 @@ void setup () {
     // and add to the scene array
     new Scene(
     new Title(frontPageTitle, new PVector (0, 60), new PVector (width, 100), CENTER, frontPageFontSize), color(255), 
-    new DragableImage(new PVector(400, (height/2)+20), new PVector(250, 320), new Gif(this, "chip.gif")), 
-    new DragableImageTrigger(new PVector(width-720, (height/2)+140), new PVector(50, 50)), 
+    new DraggableImage(new PVector(400, (height/2)+20), new PVector(250, 320), new Gif(this, "chip.gif")), 
+    new DraggableImageTrigger(new PVector(width-720, (height/2)+140), new PVector(50, 50)), 
     new Arrow[]{
-      new Arrow(new PVector(700, (height/2)+160), 50, 200, RIGHT), 
-      new Arrow(new PVector(725, (height/2)+160), 50, 175, RIGHT), 
-      new Arrow(new PVector(750, (height/2)+160), 50, 150, RIGHT), 
-      new Arrow(new PVector(775, (height/2)+160), 50, 125, RIGHT), 
-      new Arrow(new PVector(800, (height/2)+160), 50, 100, RIGHT), 
-      new Arrow(new PVector(825, (height/2)+160), 50, 75, RIGHT), 
-      new Arrow(new PVector(850, (height/2)+160), 50, 50, RIGHT), 
+      new Arrow(new PVector(700, (height/2)+100), 150, 200, RIGHT), 
+      new Arrow(new PVector(725, (height/2)+100), 150, 175, RIGHT), 
+      new Arrow(new PVector(750, (height/2)+100), 150, 150, RIGHT), 
+      new Arrow(new PVector(775, (height/2)+100), 150, 125, RIGHT), 
+      new Arrow(new PVector(800, (height/2)+100), 150, 100, RIGHT), 
+      new Arrow(new PVector(825, (height/2)+100), 150, 75, RIGHT), 
+      new Arrow(new PVector(850, (height/2)+100), 150, 50, RIGHT), 
     }, 
       new Image[] { new Image(new PVector (width-1000, 220), new PVector (780, 900), loadImage("hand.png")),
     }, 
@@ -130,7 +130,7 @@ void setup () {
       new Button(buttonRightPos, buttonSize, 3, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
-      new TextBox(noPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
+      new TextBox(noPage, bigTextBoxPosition, bigTextBoxSize),       
     },
       new Image[] { new Image(new PVector (width-670, 290), new PVector (480, 540), loadImage("phone.png")),
     }, false
@@ -141,9 +141,9 @@ void setup () {
       new Button(buttonRightPos, buttonSize, 4, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
-      new TextBox(yesPage, bigTextBoxPosition, bigTextBoxSize, LEFT),       
+      new TextBox(yesPage, bigTextBoxPosition, bigTextBoxSize),       
     },
-      new Image[] { new Image(new PVector (width-750, 220), new PVector (480, 500), loadImage("reader.png")),
+      new Image[] { new Image(new PVector (width-670, 290), new PVector (480, 540), loadImage("reader.png")),
     }, false
     ), 
     new Scene(
@@ -153,7 +153,7 @@ void setup () {
       new Button(buttonRightPos, buttonSize, 5, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
-      new TextBox(infoPage1, smallTextBoxPosition, smallTextBoxSize, LEFT),  
+      new TextBox(infoPage1, smallTextBoxPosition, smallTextBoxSize),  
     },
       new Image[] { new Image(new PVector (width-750, 220), new PVector (680, 800), loadImage("chip-green.png")),
     }, false
@@ -165,7 +165,7 @@ void setup () {
       new Button(buttonRightPos, buttonSize, 6, false, LEFT, RIGHT)
     }, 
     new TextBox[]{
-      new TextBox(infoPage2, smallTextBoxPosition, smallTextBoxSize, LEFT),  
+      new TextBox(infoPage2, smallTextBoxPosition, smallTextBoxSize),  
     },
       new Image[] { new Image(new PVector (width-640, 340), new PVector (480, 600), loadImage("chip-red.png")),
     }, false
